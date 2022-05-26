@@ -69,24 +69,38 @@ export default class Compositor<X>{
     return result?.data || null;
   }
 
-  check (ruleset: RecursiveArrayOfPredicates): boolean {
-    if (this._isNestedArray(ruleset)) return this._checkArrayOfRulesets(ruleset as RecursiveArrayOfPredicates);
-    return this._checkRuleset(ruleset as Predicate[]);
+  check (ruleset: RecursiveArrayOfPredicates, cache: Map<Predicate, boolean>): boolean {
+    if (this._isNestedArray(ruleset)) return this._checkArrayOfRulesets(ruleset as RecursiveArrayOfPredicates, cache);
+    return this._checkRuleset(ruleset as Predicate[], cache);
   };
 
   _getCandidates<T>(dir: Composition<T>): Composition<T> | [] {
-  return dir.filter(composition => {
-      return this.check(composition.ruleset);
-    });
+    const cache = new Map();
+    try {
+      return dir.filter(composition => {
+        if (!this.check(composition.ruleset, cache)) return false;
+        if (!composition.important) return true;
+        throw {
+          composition,
+        }
+      });
+    } catch (e) {
+      if (e.composition) return [e.composition];
+      return [];
+    }
   }
 
-  _checkArrayOfRulesets(rulesetArr: RecursiveArrayOfPredicates): boolean {
-    return rulesetArr.some((ruleset) => this.check(ruleset as RecursiveArrayOfPredicates));
+  _checkArrayOfRulesets(rulesetArr: RecursiveArrayOfPredicates, cache: Map<Predicate, boolean>): boolean {
+    return rulesetArr.some((ruleset) => this.check(ruleset as RecursiveArrayOfPredicates, cache));
   };
 
-  _checkRuleset(ruleset: Predicate[]): boolean {
+  _checkRuleset(ruleset: Predicate[], cache: Map<Predicate, boolean>): boolean {
     return ruleset.every((rule) => {
-      return rule();
+      const cached = cache.get(rule);
+      if (cached === false || cached === true) return cached;
+      const result = rule();
+      cache.set(rule, result);
+      return result;
     });
   };
 
