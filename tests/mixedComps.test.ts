@@ -27,10 +27,10 @@ describe("Смешанные композиции", () => {
       },
       {
         ruleset: [() => true],
-        data: 1,
+        data: 13,
       },
     ]
-    expect(c.resolve(data)).toBe(1);
+    expect(c.resolve(data)).toBe(13);
     expect(callback.mock.calls.length).toBe(0);
 
     const shouldBeFired = jest.fn(() => 42);
@@ -41,7 +41,7 @@ describe("Смешанные композиции", () => {
       },
       {
         ruleset: [() => true],
-        callback,
+        callback: shouldBeFired,
       },
     ]
     expect(c.resolve(secondData)).toBe(42);

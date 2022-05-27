@@ -105,4 +105,39 @@ export default class Compositor<X>{
   };
 
   _isNestedArray = (arr: any): boolean => Array.isArray(arr[0])
+
+  public resolveFrom_debug<T>(route: string | string[], target: IncludesComposition<T> = this.data as IncludesComposition<T>): T | null {
+    return this.resolve_debug(this.navigate(route, target))
+  }
+
+  public resolve_debug<T>(comp: Composition<T>): T | null {
+    return this.resolve(this.createDebugComp(comp));
+  }
+
+  public createDebugComp<T> (comp: Composition<T>): Composition<T> {
+    comp.forEach((obj, index, array) => {
+      array[index].ruleset.forEach(bindRecursive)
+    })
+
+    function bindRecursive<T extends RecursiveArrayOfPredicates>(fn: T[keyof T] , i: number, arr: T) {
+      if (Array.isArray(arr[i])) {
+        // @ts-ignore
+        arr[i].forEach(bindRecursive)
+      } else {
+        // @ts-ignore
+        arr[i] = new Proxy(fn, {
+          apply(t, th, args) {
+            // @ts-ignore
+            const r = Reflect.apply(t, th, args);
+            console.log("At composition: ", comp)
+            // @ts-ignore
+            console.log((fn.name || fn + "") + " | Result: ", r)
+            return r;
+          }
+        })
+      }
+    }
+    return comp;
+ }
+
 }
