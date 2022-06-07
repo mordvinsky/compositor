@@ -252,6 +252,50 @@ const isUserNotFinishedAllLessons = () => !isUserFinishedAllLessons
 
 Не используйте стрелочную функцию, если она дублируется и стоит дорого.
 
+### Use cases top:
+Примеры небольшие, но передают общую суть. Полностью ценность библиотеки раскрывается на 10-20 условиях и более.
+
+#### 1. Conditional redirecting
+В более общей формулировке: "Сделай то, что сейчас нужно сделать"
+
+``` 
+{   
+    ruleset: [() => true],
+    callback: declineRedirect
+},
+{   
+    ruleset: [noAccess],
+    callback: () => redirectTo(url.noAccess)
+},
+{   
+    ruleset: [noAccess, () => hasAccessTo(url.anotherPrivatePage)],
+    callback: () => redirectTo(url.anotherPrivatePage)
+},
+
+```
+
+#### 2. Conditional Configurations
+В более общей формулировке: "Дай мне данные под конкретный случай"
+``` 
+{   
+    ruleset: [() => true],
+    data: {
+        color: "",
+        welcomingText: "Привет!",
+        showAdvancedTools: false
+    }
+},
+{   
+    ruleset: [isPremiumUser],
+    data: {
+        color: "",
+        welcomingText: "Добро пожаловать",
+        showAdvancedTools: true
+    }
+},
+
+```
+
 ### Work in progress
 - Улучшенная типизация
 - Тестирование
