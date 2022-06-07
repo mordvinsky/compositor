@@ -3,7 +3,7 @@ import { CallableComposition, Composition, DataComposition } from "../src/compos
 
 const c = new Compositor()
 
-describe("Композиции с data-полем", () => {
+describe("Общий функционал", () => {
   test('Testing is possible', () => {
     expect(c).toBeTruthy();
   });
@@ -55,15 +55,10 @@ describe("Композиции с data-полем", () => {
       },
       {
         ruleset: [() => true],
-        weight: 0,
         data: 2
-      },
-      {
-        ruleset: [() => true],
-        data: 3
       }
     ]
-    expect(c.resolve(data)).toBe(3)
+    expect(c.resolve(data)).toBe(2)
   })
   test("При наличии important и прохождении проверки выполнение проверки прерывается, возвращается дата из этого объекта", () => {
     const rule = jest.fn(() => true);
@@ -73,7 +68,7 @@ describe("Композиции с data-полем", () => {
       {
         ruleset: [rule],
         weight: 1,
-        important: false,
+        important: false, //Можно не указывать, по умолчанию false
         data: 1
       },
       {
