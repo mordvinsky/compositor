@@ -1,7 +1,7 @@
-import { CallableComposition } from "../../src/compositor.types";
-import Compositor from "../../src/compositor";
+import { CallableComposition } from "../../src/strategyResolver.types";
+import StrategyResolver from "../../src/strategyResolver";
 
-const c = new Compositor();
+const c = new StrategyResolver();
 
 describe("Пример реализация паттерна Стратегия c помощью библиотеки", () => {
  test("Поприветствуем пользователя должным образом в зависимости от его параметров", ()=> {

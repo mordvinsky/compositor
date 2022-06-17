@@ -1,7 +1,7 @@
-import { Composition } from "../src/compositor.types";
-import Compositor from "../src/compositor";
+import { Composition } from "../src/strategyResolver.types";
+import StrategyResolver from "../src/strategyResolver";
 
-const c = new Compositor();
+const c = new StrategyResolver();
 
 describe("Смешанные композиции", () => {
   test("При наличии data и callback последний в приоритете (Добавление data и callback в один объект является плохой практикой, т.к. data никогда не вернется)", ()=> {

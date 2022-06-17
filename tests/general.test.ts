@@ -1,7 +1,7 @@
-import Compositor from "../src/compositor";
-import { CallableComposition, Composition, DataComposition } from "../src/compositor.types";
+import StrategyResolver from "../src/strategyResolver";
+import { CallableComposition, Composition, DataComposition } from "../src/strategyResolver.types";
 
-const c = new Compositor()
+const c = new StrategyResolver()
 
 describe("Общий функционал", () => {
   test('Testing is possible', () => {

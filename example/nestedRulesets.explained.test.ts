@@ -1,6 +1,6 @@
-import Compositor from "../../src/compositor";
+import StrategyResolver from "../../src/strategyResolver";
 
-const c = new Compositor()
+const c = new StrategyResolver()
 
 describe("Вложенные ruleset", () => {
   test("Вложеннные массивы ruleset работают как логическое ИЛИ", () => {
