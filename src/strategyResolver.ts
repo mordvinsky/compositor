@@ -3,9 +3,9 @@ import {
   Predicate,
   RecursiveArrayOfPredicates,
   IncludesComposition, CompositionObject
-} from "./compositor.types";
+} from "./strategyResolver.types";
 
-export default class Compositor<X>{
+export default class StrategyResolver<X>{
   private data: IncludesComposition<X>;
   constructor(data?: IncludesComposition<X>) {
     this.data = data;
@@ -126,6 +126,7 @@ export default class Compositor<X>{
       } else {
         // @ts-ignore
         arr[i] = new Proxy(fn, {
+          // @ts-ignore
           apply(t, th, args) {
             // @ts-ignore
             const r = Reflect.apply(t, th, args);

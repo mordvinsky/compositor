@@ -1,7 +1,7 @@
-import Compositor from "../../src/compositor";
-import { CallableComposition } from "../../src/compositor.types";
+import StrategyResolver from "../../src/strategyResolver";
+import { CallableComposition } from "../../src/strategyResolver.types";
 
-const c = new Compositor()
+const c = new StrategyResolver()
 
 describe("Работа со стрелочными функциями, кэширование", () => {
   test("Плохой пример", () => {
