@@ -19,8 +19,4 @@ describe("Создается объект дебага", () => {
   test("Шорткат на резолв", () => {
     c.resolve_debug(data)
   })
-
-  test("Шорткат на резолв", () => {
-    c.resolveFrom_debug("key", {key: data})
-  })
 })

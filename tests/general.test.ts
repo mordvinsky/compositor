@@ -1,7 +1,7 @@
 import StrategyResolver from "../src/strategyResolver";
-import { CallableComposition, Composition, DataComposition } from "../src/strategyResolver.types";
+import { CallableComposition, DataComposition } from "../src/strategyResolver.types";
 
-const c = new StrategyResolver()
+const c = new StrategyResolver({debug: true})
 
 describe("Общий функционал", () => {
   test('Testing is possible', () => {
@@ -110,8 +110,8 @@ describe("Общий функционал", () => {
       },
     ]
     expect(c.resolve(data)).toBe(4)
-    expect(rule.mock.calls.length).toBe(1)
     expect(shouldBeFired.mock.calls.length).toBe(1)
+    expect(rule.mock.calls.length).toBe(1)
   })
 })
 
