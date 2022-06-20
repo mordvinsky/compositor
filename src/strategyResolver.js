@@ -39,6 +39,7 @@ export default class StrategyResolver {
     }
     this.useHooks = useHooks;
     this.debug = debug;
+    console.log(this)
   }
 
   resolve(data = this.data) {

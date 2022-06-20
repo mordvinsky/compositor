@@ -2,7 +2,7 @@ export type Composition<T> = Strategy<T>[]
 export type DataComposition<T> = DataStrategy<T>[]
 export type CallableComposition<T> = CallableStrategy<T>[]
 
-export type Strategy<T> = CallableStrategy<T> | DataStrategy<T>
+export type Strategy<T> = CallableStrategy<T> | DataStrategy<T> | MixedStrategy<T>
 
 export type CallableStrategy<T> = {
   ruleset: RecursiveArrayOfPredicates;
@@ -18,6 +18,14 @@ export type DataStrategy<T> = {
   weight?: number;
   data: T;
   callback?: never;
+}
+
+export type MixedStrategy<T> = {
+  ruleset: RecursiveArrayOfPredicates;
+  important?: boolean;
+  weight?: number;
+  data: T;
+  callback?: (data: T) => any;
 }
 
 export type Predicate = () => boolean;

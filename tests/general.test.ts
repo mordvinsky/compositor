@@ -1,7 +1,7 @@
 import StrategyResolver from "../src/strategyResolver";
 import { CallableComposition, DataComposition } from "../src/strategyResolver.types";
 
-const c = new StrategyResolver({debug: true})
+const c = new StrategyResolver()
 
 describe("Общий функционал", () => {
   test('Testing is possible', () => {
