@@ -1,8 +1,8 @@
 import { Strategy } from "../strategyResolver.types";
 
-export default function defaultResolver<T> (strategy: Strategy<T>) {
+export default function defaultResolver<T> (strategy: Strategy<T>, callHook) {
   if (isCallableStrategy(strategy)) {
-    return strategy.callback(strategy.data)
+    return strategy.callback(callHook("beforeStrategyCall", strategy.data))
   }
   return strategy.data;
 }

@@ -1,7 +1,7 @@
 import { Composition, Strategy } from "../strategyResolver.types";
 
-export default function defaultReducer<T>(arr: Composition<T>): Strategy<T> | undefined {
-  if (arr[0] === undefined) return undefined;
+export default function defaultReducer<T>(arr: Composition<T>, callHook): Strategy<T> | undefined {
+  if (arr[0] === undefined) return callHook("reducerUndefined", undefined);
   let accum = arr[0];
 
   for (let i = 1; i < arr.length; i++) {

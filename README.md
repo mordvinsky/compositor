@@ -296,6 +296,12 @@ const isUserNotFinishedAllLessons = () => !isUserFinishedAllLessons
 
 ```
 
+### Technical info & structure
+
+Entry point проекта - strategyResolver.ts
+
+
+
 ### Work in progress
 - Улучшенная типизация
 - Тестирование
