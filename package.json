@@ -2,7 +2,7 @@
   "name": "strategy-resolver",
   "version": "1.2.0",
   "description": "better replacement for nested ifelse or switchcase blocks",
-  "main": "src/strategyResolver.js",
+  "main": "src/strategyResolver.ts",
   "scripts": {
     "test": "jest",
     "build": "webpack",

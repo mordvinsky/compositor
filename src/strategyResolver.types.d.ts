@@ -34,32 +34,23 @@ export type RecursiveArrayOfPredicates = Predicate[] | RecursiveArrayOfPredicate
 
 export type RulesCache = Map<Predicate, boolean>
 
-export type StrategyResolverConfiguration<T> = {
-  data?: T[];
+export type StrategyResolverConfiguration<I, BeforeFilterData, Filtered, BeforeReduce, Reduced, BeforeResolve, Resolve, AfterResolve, Return> = {
+  data?: I[];
 
-  filter?: FilterFunction<T[]>;
-  checker?: RulesetChecker
-  reducer?: Reducer<T>;
-  resolver?: Resolver<T>;
+  filter?: ChainLink<BeforeFilterData, Filtered>
+  reducer?: ChainLink<BeforeReduce, Reduced>
+  resolver?: ChainLink<BeforeResolve, Resolve>;
 
-  beforeResolve?: any;
-  afterResolve?: any;
-
-  beforeEachCompObj?: any;
-  afterEachCompObj?: any;
-
-  beforeEachRuleCheck?: any;
-  afterEachRuleCheck?: any;
-
-  onResult?: any;
+  hooks: {
+    beforeFilter: ChainLink<I[], BeforeFilterData>
+    beforeReduce: ChainLink<Filtered, BeforeReduce>
+    beforeResolve: ChainLink<Reduced, BeforeResolve>
+    afterResolve: ChainLink<AfterResolve, Return>
+    [k: string]: ProxyFn<any>
+  }
 
   debug: boolean
 }
 
-export type FilterFunction<T extends any> = (arr: T[]) =>  T[] | []
-export type DefaultFilterFunction<T> = (arr: T[], checker: RulesetChecker) => T[] | []
-
-export type RulesetChecker = (arr: RecursiveArrayOfPredicates) => boolean
-export type DefaultRulesetChecker = (arr: RecursiveArrayOfPredicates, cache: RulesCache) => boolean
-
-export type Reducer<T> = (arr: T[]) => T | undefined
+export type ChainLink<In, Out> = (arg: In) => Out
+export type ProxyFn<T extends any> = (arg: T) => T

@@ -3,9 +3,10 @@ import defaultReducer from "./defaults/reducer";
 import defaultResolver from "./defaults/resolver";
 import loggers from "./loggers";
 import assign from "./assign";
+import { StrategyResolverConfiguration } from "./strategyResolver.types";
 
-export default class StrategyResolver {
-  constructor(config) {
+export default class StrategyResolver<I, BeforeFilterData, Filtered, BeforeReduce, Reduced, BeforeResolve, Resolve, AfterResolve, Return> {
+  constructor(config: StrategyResolverConfiguration<I, BeforeFilterData, Filtered, BeforeReduce, Reduced, BeforeResolve, Resolve, AfterResolve, Return>) {
     this.configure(config)
   }
 
