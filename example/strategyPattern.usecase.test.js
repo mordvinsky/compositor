@@ -1,4 +1,4 @@
-import StrategyResolver from "/src/strategyResolver";
+import StrategyResolver from "../src/strategyResolver";
 
 const c = new StrategyResolver();
 
