@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:example/weights.explained.test.ts
 import StrategyResolver from "../../src/strategyResolver";
+========
+import StrategyResolver from "../src/strategyResolver";
+>>>>>>>> refactor/v2general:example/weights.explained.test.js
 
 const c = new StrategyResolver();
 

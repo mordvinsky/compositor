@@ -9,17 +9,15 @@ module.exports = {
     hot: true,
   },
   entry: {
-    index: "./src/conpositor.js",
+    index: "./src/strategyResolver.js",
   },
   module: {
     rules: [
       { test: /\.(js)$/, use: "babel-loader", exclude: /node_modules/ },
-      { test: /\.(ts)$/, use: "ts-loader", exclude: /node_modules/ },
-      { test: /\.(d.ts)$/, use: "ts-loader", exclude: /node_modules/ },
     ],
   },
   resolve: {
-    extensions: [".ts", ".js", ".d.ts"],
+    extensions: [".js", ".d.ts"],
   },
   output: {
     filename: "[name]_bundle.js",

@@ -1,5 +1,4 @@
 import StrategyResolver from "../src/strategyResolver";
-import { CallableComposition, Composition, DataComposition } from "../src/strategyResolver.types";
 
 const c = new StrategyResolver()
 
@@ -9,7 +8,7 @@ describe("Общий функционал", () => {
   });
 
   test("По умолчанию возвращается последний прошедший проверку элемент", () => {
-    const data: DataComposition<number> = [
+    const data = [
       {
         ruleset: [() => true],
         data: 1
@@ -27,7 +26,7 @@ describe("Общий функционал", () => {
   })
 
   test("При наличии веса возвращается дата из объекта с наибольшим весом", () => {
-    const data: DataComposition<number> = [
+    const data = [
       {
         ruleset: [() => true],
         weight: -1,
@@ -47,7 +46,7 @@ describe("Общий функционал", () => {
     expect(c.resolve(data)).toBe(2)
   })
   test("Вес по умолчанию - 0", () => {
-    const data: DataComposition<number> = [
+    const data = [
       {
         ruleset: [() => true],
         weight: 0,
@@ -64,7 +63,7 @@ describe("Общий функционал", () => {
     const rule = jest.fn(() => true);
     const shouldNotBeFired = jest.fn(() => true);
 
-    const data: DataComposition<number> = [
+    const data = [
       {
         ruleset: [rule],
         weight: 1,
@@ -91,7 +90,7 @@ describe("Общий функционал", () => {
     const rule = jest.fn(() => true);
     const shouldBeFired = jest.fn(() => true);
 
-    const data: DataComposition<number> = [
+    const data = [
       {
         ruleset: [rule],
         data: 1
@@ -110,18 +109,18 @@ describe("Общий функционал", () => {
       },
     ]
     expect(c.resolve(data)).toBe(4)
-    expect(rule.mock.calls.length).toBe(1)
     expect(shouldBeFired.mock.calls.length).toBe(1)
+    expect(rule.mock.calls.length).toBe(1)
   })
 })
 
 describe("Композиции c Callback-полем", () => {
-  test("Callback вызывается автоматически только для нужного элемента. Его результат возвращается из c.resolve()", () => {
+  test(`Если есть callback, он вызывается для итогового объекта. Аргументом передается data`, () => {
     const rule = jest.fn(() => true);
     const callback = jest.fn(() => 0);
-    const resultCallback = jest.fn(() => 42);
+    const resultCallback = jest.fn((arg) => arg);
 
-    const data: CallableComposition<number> = [
+    const data = [
       {
         ruleset: [rule],
         callback,
@@ -132,6 +131,7 @@ describe("Композиции c Callback-полем", () => {
       },
       {
         ruleset: [rule],
+        data: 42,
         callback: resultCallback,
       },
     ]

@@ -1,12 +1,16 @@
+<<<<<<<< HEAD:example/arrowFn.explained.test.ts
 import StrategyResolver from "../../src/strategyResolver";
 import { CallableComposition } from "../../src/strategyResolver.types";
+========
+import StrategyResolver from "../src/strategyResolver";
+>>>>>>>> refactor/v2general:example/arrowFn.explained.test.js
 
 const c = new StrategyResolver()
 
 describe("Работа со стрелочными функциями, кэширование", () => {
   test("Плохой пример", () => {
     const expensiveComputations = jest.fn(() => true)
-    const data: CallableComposition<number> = [
+    const data = [
       {
         ruleset: [() => expensiveComputations()], // Это две РАЗНЫЕ функции, делающие одно и то же.
         callback: () => 42
@@ -23,7 +27,7 @@ describe("Работа со стрелочными функциями, кэши�
 
   test("Правильный пример", () => {
     const expensiveComputations = jest.fn(() => true)
-    const data: CallableComposition<number> = [
+    const data = [
       {
         ruleset: [expensiveComputations],
         callback: () => 42
