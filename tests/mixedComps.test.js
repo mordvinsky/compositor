@@ -1,17 +1,15 @@
-import { Composition } from "../src/strategyResolver.types";
-import StrategyResolver from "../src/strategyResolver";
+import StrategyResolver from "/src/strategyResolver";
 
 const c = new StrategyResolver();
 
 describe("Смешанные композиции", () => {
-  test("При наличии data и callback последний в приоритете (Добавление data и callback в один объект является плохой практикой, т.к. data никогда не вернется)", ()=> {
-    const callback = jest.fn(() => 42);
-    const data: Composition<number> = [
-      // @ts-ignore
+  test("При наличии data и callback последний в приоритете. Data передается в callback", ()=> {
+    const callback = jest.fn((arg) => arg);
+    const data = [
       {
         ruleset: [() => true],
         callback,
-        data: 1
+        data: 42
       },
     ]
     expect(c.resolve(data)).toBe(42);
@@ -20,7 +18,7 @@ describe("Смешанные композиции", () => {
 
   test("Допускается использовать data и callback объекты в одной композиции. Возвращается data или результат callback", () => {
     const callback = jest.fn(() => 42);
-    const data: Composition<number> = [
+    const data = [
       {
         ruleset: [() => true],
         callback,
@@ -34,7 +32,7 @@ describe("Смешанные композиции", () => {
     expect(callback.mock.calls.length).toBe(0);
 
     const shouldBeFired = jest.fn(() => 42);
-    const secondData: Composition<number> = [
+    const secondData = [
       {
         ruleset: [() => true],
         data: 1,
@@ -49,7 +47,7 @@ describe("Смешанные композиции", () => {
   })
 
   test("Допускается смешивать возвращаемые типы композиций (Но лучше так не делать)", () => {
-    const data: Composition<number | string> = [
+    const data = [
       {
         ruleset: [() => true],
         data: 1,
@@ -63,8 +61,8 @@ describe("Смешанные композиции", () => {
   })
 
   test("Допускается смешивать возвращаемые типы композиций, использовать data и callback в одной композиции, и даже в одном объекте (very bad practice)", () => {
-    const mock42 = jest.fn(() => 42)
-    const data: Composition<number | string | boolean> = [
+    const mock = jest.fn((arg) => arg)
+    const data = [
       {
         ruleset: [() => true],
         data: 404,
@@ -77,11 +75,10 @@ describe("Смешанные композиции", () => {
         ruleset: [() => true],
         callback: () => true
       },
-      // @ts-ignore
       {
         ruleset: [() => true],
-        callback: mock42,
-        data: "Это поле здесь недопустимо, ругается TS"
+        callback: mock,
+        data: 42
       }
     ]
     expect(c.resolve(data)).toBe(42);

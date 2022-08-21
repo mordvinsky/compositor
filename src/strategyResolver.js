@@ -3,10 +3,9 @@ import defaultReducer from "./defaults/reducer";
 import defaultResolver from "./defaults/resolver";
 import loggers from "./loggers";
 import assign from "./assign";
-import { StrategyResolverConfiguration } from "./strategyResolver.types";
 
-export default class StrategyResolver<I, BeforeFilterData, Filtered, BeforeReduce, Reduced, BeforeResolve, Resolve, AfterResolve, Return> {
-  constructor(config: StrategyResolverConfiguration<I, BeforeFilterData, Filtered, BeforeReduce, Reduced, BeforeResolve, Resolve, AfterResolve, Return>) {
+export default class StrategyResolver {
+  constructor(config) {
     this.configure(config)
   }
 
@@ -23,26 +22,6 @@ export default class StrategyResolver<I, BeforeFilterData, Filtered, BeforeReduc
       (res) => $.resolver(res, callHook),
       (res) => $.runHook("afterResolve", res),
     ])
-  }
-
-  async resolveAsync(data = this.data) {
-    const $ = this;
-    const callHook = $.runHook.bind($)
-
-    return await new Promise(() => data)
-      .then(async res => await $.runHookAsync("beforeFilter", res))
-      .then(async res => await $.filter(res, callHook))
-      .then(async res => await $.runHookAsync("beforeReduce", res))
-      .then(async res => await $.reducer(res, callHook))
-      .then(async res => await $.runHookAsync("beforeResolve", res))
-      .then(async res => await $.resolver(res, callHook))
-      .then(async res => await $.runHookAsync("afterResolve", res))
-  }
-
-  async runHookAsync(hook, previousStepResult) {
-    if (this.debug) loggers[hook](previousStepResult);
-    if (!this.useHooks || typeof this.hooks[hook] !== "function") return previousStepResult;
-    return await this.hooks[hook](previousStepResult)
   }
 
   runHook(hook, previousStepResult) {

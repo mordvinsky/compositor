@@ -1,5 +1,4 @@
-import { CallableComposition } from "../../src/strategyResolver.types";
-import StrategyResolver from "../../src/strategyResolver";
+import StrategyResolver from "/src/strategyResolver";
 
 const c = new StrategyResolver();
 
@@ -20,7 +19,7 @@ describe("Пример реализация паттерна Стратегия 
 
    const shouldBeFired = jest.fn(() => console.log(`Добро пожаловать, Магистр!`));
 
-   const strategies: CallableComposition<void> = [
+   const strategies = [
      {
        ruleset: [() => true], // аналогично default
        weight: Number.NEGATIVE_INFINITY, // т.к. weight по умолчанию 0, эта конструкция гарантирует, что правило перезапишется ЛЮБЫМ объектом, даже с весом -999
